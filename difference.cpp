@@ -1,5 +1,5 @@
 // g++ -o difference -std=c++2a difference.cpp -lstdc++
-// 求文件差集, 允许有重复行, 会改变原来行的顺序
+// 求两文件差集, 允许有重复行, 会改变原来行的顺序
 
 #include <iostream>
 #include <fstream>
