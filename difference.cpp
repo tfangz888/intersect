@@ -1,5 +1,5 @@
 // g++ -o difference -std=c++2a difference.cpp -lstdc++
-// 求两文件差集, 允许有重复行, 会改变原来行的顺序
+// 求两文件差集, 允许有重复行, 不会改变原来行的顺序.  如果第一个文件有重复行，会继续保留
 
 #include <iostream>
 #include <fstream>
@@ -27,9 +27,9 @@ std::string& trim(std::string &s)
 
 /*
  * It will iterate through all the lines in file and
- * put them in given set
+ * put them in given vector
  */
-bool getFileContent(std::string fileName, std::set<std::string> & setOfStrs)
+bool getFileContent(std::string fileName, std::vector<std::string> & vectOfStrs)
 {
     // Open the File
     std::ifstream in(fileName.c_str());
@@ -49,7 +49,7 @@ bool getFileContent(std::string fileName, std::set<std::string> & setOfStrs)
         // Line contains string of length > 0 then save it in vector
 		str = trim(str);
         if(str.size() > 0)
-            setOfStrs.insert(str);
+            vectOfStrs.push_back(str);
     }
     //Close The File
     in.close();
@@ -80,27 +80,26 @@ int main(int argc,char *argv[ ])
 	    return -1;
 	}
     
-    set<string> firstSet;
-    bool result = getFileContent(first, firstSet);
+    vector<string> firstVect;
+    bool result = getFileContent(first, firstVect);
 	if(!result)
 	{
 	    cout << "read error " << first << endl;
 	}
-    set<string> secondSet;
-    result = getFileContent(second, secondSet);
+    vector<string> secondVect; 
+    result = getFileContent(second, secondVect);
 	if(!result)
 	{
 	    cout << "read error " << second << endl;
 	}
+    set<string> s(secondVect.begin(), secondVect.end()); // set本身内部就会排序
     
-    set<string> difference;
-    std::set_difference (firstSet.begin(), firstSet.end(),
-            secondSet.begin(), secondSet.end(),
-            std::inserter(difference, difference.begin()));
-    
-    for(string line : difference)
-	{
-	    std::cout<<line<<std::endl;
+    for (string & line: firstVect)
+    {  
+        if (!s.contains(line))
+        {
+            std::cout<<line<<std::endl;
+        }
     }
 
     return 0;
