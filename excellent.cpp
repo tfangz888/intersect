@@ -184,7 +184,7 @@ int main(int argc,char *argv[ ])
             vects_set_top.push_back(getVectorRange(vec, count));            
         }
         // 求交集
-	    set<string> interSect_top = intersection(vects_set);
+	    set<string> interSect_top = intersection(vects_set_top);
         for (string student : interSect_top)
         {
             // 如果还没有参与排名，就进入排名
