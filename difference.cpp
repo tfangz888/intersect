@@ -1,11 +1,10 @@
 // g++ -o difference -std=c++2a difference.cpp -lstdc++
-// 求文件差集
-// 文件不允许有重复行，排序后会改变原有顺序
+// 求文件差集, 允许有重复行, 会改变原来行的顺序
 
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
+#include <set>
 #include <algorithm>
 #include <iterator>
 #include <filesystem>
@@ -28,9 +27,9 @@ std::string& trim(std::string &s)
 
 /*
  * It will iterate through all the lines in file and
- * put them in given vector
+ * put them in given set
  */
-bool getFileContent(std::string fileName, std::vector<std::string> & vecOfStrs)
+bool getFileContent(std::string fileName, std::set<std::string> & setOfStrs)
 {
     // Open the File
     std::ifstream in(fileName.c_str());
@@ -50,7 +49,7 @@ bool getFileContent(std::string fileName, std::vector<std::string> & vecOfStrs)
         // Line contains string of length > 0 then save it in vector
 		str = trim(str);
         if(str.size() > 0)
-            vecOfStrs.push_back(str);
+            setOfStrs.insert(str);
     }
     //Close The File
     in.close();
@@ -81,27 +80,25 @@ int main(int argc,char *argv[ ])
 	    return -1;
 	}
     
-    vector<string> firstVect;
-    bool result = getFileContent(first, firstVect);
+    set<string> firstSet;
+    bool result = getFileContent(first, firstSet);
 	if(!result)
 	{
 	    cout << "read error " << first << endl;
 	}
-    vector<string> secondVect;
-    result = getFileContent(second, secondVect);
+    set<string> secondSet;
+    result = getFileContent(second, secondSet);
 	if(!result)
 	{
 	    cout << "read error " << second << endl;
 	}
     
-    vector<string> difference;
-    std::sort(firstVect.begin(), firstVect.end());
-	std::sort(secondVect.begin(), secondVect.end());
-    std::set_difference (firstVect.begin(), firstVect.end(),
-            secondVect.begin(), secondVect.end(),
-            std::back_inserter(difference));
-            
-    for(string & line : difference)
+    set<string> difference;
+    std::set_difference (firstSet.begin(), firstSet.end(),
+            secondSet.begin(), secondSet.end(),
+            std::inserter(difference, difference.begin()));
+    
+    for(string line : difference)
 	{
 	    std::cout<<line<<std::endl;
     }
