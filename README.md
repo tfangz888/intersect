@@ -20,7 +20,7 @@ Linux下的uniq命令会改变原来的顺序
 求多个科目的优秀学生，保留原有优秀顺序。第一个参数为优秀的前百分位   
 如果 ./excellent 0.3 subject1.txt subject2.txt subject3.txt      
 0.3表示每个科目名次在30%以内, subject是成绩排名，第一名是为最优秀    
-从每科目的第一名开始找，求各科目的并集  
+从每科目的第一名开始找，求各科目的交集  
 
 # 寻找差学生，只要有一科成绩差，就会被列为差学生
 ## worse 0.2 subject1.txt subject2.txt subject3.txt 排名倒数20%之内的学生
