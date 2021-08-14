@@ -203,7 +203,7 @@ int main(int argc,char *argv[ ])
         {
             vects_set_worse.push_back(getVectorRangeReverse(vec, count));            
         }
-        // 求交集
+        // 求差学生并集
 	    set<string> interSect_worse = unionsection(vects_set_worse);
         for (string student : interSect_worse)
         {
