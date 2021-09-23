@@ -1,0 +1,10 @@
+build_for_windows:
+
+打开x64 Native Tools Command Prompt
+
+cl.exe difference.cpp /std:c++latest /utf-8
+cl.exe excellent.cpp /std:c++latest /utf-8
+cl.exe intersect.cpp /std:c++latest /utf-8
+cl.exe merge.cpp /std:c++latest /utf-8
+cl.exe unique.cpp /std:c++latest /utf-8
+cl.exe worse.cpp /std:c++latest /utf-8
